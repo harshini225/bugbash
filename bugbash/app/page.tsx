@@ -1,5 +1,17 @@
 import { neon } from '@neondatabase/serverless';
 import "./globals.css"
+import postgres from 'postgres';
+
+let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
+
+const conn = postgres({
+  host: PGHOST,
+  database: PGDATABASE,
+  username: PGUSER,
+  password: PGPASSWORD,
+  port: 5432,
+  ssl: 'require',
+});
 
 var myBug = String.raw`
   ,,     ,,     ,,
@@ -157,11 +169,15 @@ async function create(formData: FormData) {
 async function Entries() {
   'use server';
 
+  console.log("0 enter function");
+
   // Connect to the Neon database
   const sql = neon(`${process.env.DATABASE_URL}`, { arrayMode: true });
+  console.log("1 connected");
   
   // Collect all bugs 
   const rows = await sql.query(`SELECT * from bugs2 ORDER BY date DESC`);
+  console.log("2 collected bugs");
 
   return (
     <>
