@@ -157,6 +157,7 @@ async function create(formData: FormData) {
 async function Entries() {
   'use server';
 
+  // Connect to the Neon database
   const sql = neon(`${process.env.DATABASE_URL}`, { arrayMode: true });
   
   // Collect all bugs 
