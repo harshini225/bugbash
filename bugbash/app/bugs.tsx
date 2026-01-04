@@ -30,11 +30,11 @@ export const Posts = () => {
             <pre> {cardBug} </pre>
           </div>
           <div className="card-text">
-            <h3>bug on {row[1].toDateString()}</h3>
+            <h3>bug on {row[1].toString().split(" ").slice(0,4).join(" ")}</h3>
             <p>
-              description: {row[2]}<br></br>
-              status: {row[3]}<br></br>
-              rating: {row[4]}</p>
+              description: {row[2].toString()}<br></br>
+              status: {row[3].toString()}<br></br>
+              rating: {row[4].toString()}</p>
           </div>
         </div>
       ))}
