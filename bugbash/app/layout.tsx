@@ -1,11 +1,5 @@
 import "./globals.css";
 
-import localFont from 'next/font/local';
- 
-const ByteBounce = localFont({
-  src: './assets/ByteBounce.ttf',
-})
- 
 export const metadata = {
   title: "Bug bash for Jack",
   description: "Add bugs and learn about debugging",

@@ -1,17 +1,10 @@
-import { neon } from '@neondatabase/serverless';
 import "./globals.css"
-import postgres from 'postgres';
 
-let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
+import { NewBug } from './newBug'
+import { Posts } from "./bugs";
+import { PostsProvider } from "./usePosts";
 
-const conn = postgres({
-  host: PGHOST,
-  database: PGDATABASE,
-  username: PGUSER,
-  password: PGPASSWORD,
-  port: 5432,
-  ssl: 'require',
-});
+// import { listBugs } from './actions'
 
 var myBug = String.raw`
   ,,     ,,     ,,
@@ -29,7 +22,9 @@ var cardBug = String.raw`
 `
 
 export default function Home() {
+
   return (
+    <PostsProvider>
     <main className='flex min-h-screen flex-col items-center p-12'>
       <div className="full-website">
         <h1>
@@ -89,49 +84,20 @@ export default function Home() {
         </h2>
         <div className="parent-container">
           <div className="container">
-            <form id="bugform" action={create}>
-              <div className="form-input">
-                <label>date:</label>
-                <input type="date" id="date" name="date" required></input>
-              </div>
-              <div className="form-input">
-                <label>description of bug (in words, not code):</label>
-                <input type="text"
-                  id="description" name="description"
-                  required placeholder="describe..."
-                  pattern="^[0-9a-zA-Z ]{1,16}$"></input>
-              </div>
-              <div className="form-input">
-                <label>status of bug:</label>
-                solved
-                <input type="radio" id="solved" name="stat" value="solved"required> 
-                </input>
-                unsolved 
-                <input type="radio" id="unsolved" name="stat" value="unsolved" required> 
-                </input>
-              </div>
-              <div className="form-input">
-                <label>
-                  rate this bug out of 10: 
-                </label>
-                <input type="number"
-                  id="rate" name="rate"
-                  required placeholder="rate..."></input>
-              </div>
-              <div className="btn"><button type="submit">
-                Add Bug
-              </button></div>
-            </form>
-            </div>
+            {/* <BugForm /> */}
+            <NewBug />
           </div>
+        </div>
         <h2>bug book</h2>
-        <p>reload to see new bugs!<br></br> 
-        <br></br> 
-        𓆣 ∘ ∘𖥸∘ ∘ 𓆣
-        <br></br> <br></br></p>
-          <div id="bugbook">
-            <Entries />
-          </div>
+        <p> 
+          {/* reload to see new bugs!<br></br> */}
+          {/* <br></br> */}
+          𓆣 ∘ ∘𖥸∘ ∘ 𓆣
+          <br></br> <br></br></p>
+        <div id="bugbook">
+          {/* <GetData /> */}
+          <Posts />
+        </div>
         <h2>
           u got this!!!!!
         </h2>
@@ -150,51 +116,70 @@ export default function Home() {
         </div>
       </div>
     </main>
+    </PostsProvider>
   )
 }
 
-async function create(formData: FormData) {
-  'use server';
-  // Connect to the Neon database
-  const sql = neon(`${process.env.DATABASE_URL}`);
-  const date = formData.get('date');
-  const description = formData.get('description');
-  const stat = formData.get('stat');
-  const rate = formData.get('rate');
+// async function BugForm() {
+//   return <NewBug />
+// }
 
-  // Insert the entry from the form into the Postgres database
-  await sql.query(`INSERT INTO bugs2 (date, description, status, rate) VALUES ($1, $2, $3, $4)`, [date, description, stat, rate]);
-}
+// async function myEntries() {
+//   return <bugEntries />
+// }
 
-async function Entries() {
-  'use server';
+// async function pageEntries() {
+//   'use server';
 
-  console.log("0 enter function");
+//   console.log("0 enter function");
 
-  // Connect to the Neon database
-  const sql = neon(`${process.env.DATABASE_URL}`, { arrayMode: true });
-  console.log("1 connected");
-  
-  // Collect all bugs 
-  const rows = await sql.query(`SELECT * from bugs2 ORDER BY date DESC`);
-  console.log("2 collected bugs");
+//   // Connect to the Neon database
+//   const sql = neon(`${process.env.DATABASE_URL}`, { arrayMode: true });
+//   console.log("1 connected");
 
-  return (
-    <>
-    {rows.map((row) => (
-    <div key={row[0]} className="bug-card">
-      <div className="bug-for-card">
-        <pre> {cardBug} </pre>
-      </div>
-      <div className="card-text">
-        <h3>bug on {(row[1]).toDateString()}</h3>
-        <p>
-          description: {row[2]}<br></br>
-          status: {row[3]}<br></br>
-          rating: {row[4]}</p>
-      </div>
-      </div>
-   ))}
-  </>
-  )
-}
+//   // Collect all bugs 
+//   const rows = await sql.query(`SELECT * from bugs2 ORDER BY date DESC`);
+//   console.log("2 collected bugs");
+
+//   return (
+//     <>
+//       {rows.map((row) => (
+//         <div key={row[0]} className="bug-card">
+//           <div className="bug-for-card">
+//             <pre> {cardBug} </pre>
+//           </div>
+//           <div className="card-text">
+//             <h3>bug on {(row[1]).toDateString()}</h3>
+//             <p>
+//               description: {row[2]}<br></br>
+//               status: {row[3]}<br></br>
+//               rating: {row[4]}</p>
+//           </div>
+//         </div>
+//       ))}
+//     </>
+//   )
+// }
+
+// async function GetData() {
+//   const myData = await listBugs();
+//   const rows = myData
+//   return (
+//     <>
+//       {rows.map((row) => (
+//         <div key={row[0]} className="bug-card">
+//           <div className="bug-for-card">
+//             <pre> {cardBug} </pre>
+//           </div>
+//           <div className="card-text">
+//             <h3>bug on {(row[1]).toDateString()}</h3>
+//             <p>
+//               description: {row[2]}<br></br>
+//               status: {row[3]}<br></br>
+//               rating: {row[4]}</p>
+//           </div>
+//         </div>
+//       ))}
+//     </>
+//   )
+// }
