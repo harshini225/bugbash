@@ -19,6 +19,30 @@
   }
 }
 
+/* mobile view */
+@media screen and (max-width: 40rem) {
+  .bug-card {
+    padding: 1em;
+    margin: 1em;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: left;
+    line-height: 1.3em;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #bugbook {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+}
+
 /* body {
   background: var(--background);
   color: var(--foreground);
@@ -124,7 +148,7 @@ input#unsolved {
 }
 
 .bug-card {
-  width: 40%;
+  /* width: 40%; */
   padding: 1em;
   margin: 1em;
   background-color: #fff;
