@@ -18,12 +18,6 @@ export const PostsProvider = ({ children }: { children: React.ReactNode }) => {
     listBugs().then(setPosts);
   }, []);
 
-//   const refresh = React.useCallback(async () => {
-//     const rows = listBugs();
-//     console.log("rows");
-//     console.log(rows);
-//   }, []);
-
   React.useEffect(() => {
     refresh();
     return;

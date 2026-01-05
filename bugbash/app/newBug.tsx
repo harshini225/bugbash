@@ -38,7 +38,7 @@ export const NewBug = () => {
         <label>date:</label>
         <input type="date" id="date" name="date" required
           onChange={(e) =>
-              setPostData({ ...postData, date: new Date(e.target.value) })
+              setPostData({ ...postData, date: new Date(e.target.value.replace(/-/, '/').replace(/-/, '/')) })
           }>
         </input>
       </div>

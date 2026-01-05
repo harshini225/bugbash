@@ -8,5 +8,3 @@ export type BugCreate = {
 export type BugData = BugCreate & {
   id: number;
 };
-
-export type MyFormDataKeys = keyof BugCreate

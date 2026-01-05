@@ -4,22 +4,12 @@ import { NewBug } from './newBug'
 import { Posts } from "./bugs";
 import { PostsProvider } from "./usePosts";
 
-// import { listBugs } from './actions'
-
 var myBug = String.raw`
   ,,     ,,     ,,
   oo    _oo_   ,oo,
  /==\   /==\   /==\
  (/==\) (/==\) (/==\)
   \/     \/     \/`;
-
-var cardBug = String.raw`
-    _  _
-   | )/ )
-\\ |//,' __
-(")(_)-"()))=
-   (\\
-`
 
 export default function Home() {
 
@@ -84,7 +74,6 @@ export default function Home() {
         </h2>
         <div className="parent-container">
           <div className="container">
-            {/* <BugForm /> */}
             <NewBug />
           </div>
         </div>
@@ -95,7 +84,6 @@ export default function Home() {
           𓆣 ∘ ∘𖥸∘ ∘ 𓆣
           <br></br> <br></br></p>
         <div id="bugbook">
-          {/* <GetData /> */}
           <Posts />
         </div>
         <h2>
@@ -119,67 +107,3 @@ export default function Home() {
     </PostsProvider>
   )
 }
-
-// async function BugForm() {
-//   return <NewBug />
-// }
-
-// async function myEntries() {
-//   return <bugEntries />
-// }
-
-// async function pageEntries() {
-//   'use server';
-
-//   console.log("0 enter function");
-
-//   // Connect to the Neon database
-//   const sql = neon(`${process.env.DATABASE_URL}`, { arrayMode: true });
-//   console.log("1 connected");
-
-//   // Collect all bugs 
-//   const rows = await sql.query(`SELECT * from bugs2 ORDER BY date DESC`);
-//   console.log("2 collected bugs");
-
-//   return (
-//     <>
-//       {rows.map((row) => (
-//         <div key={row[0]} className="bug-card">
-//           <div className="bug-for-card">
-//             <pre> {cardBug} </pre>
-//           </div>
-//           <div className="card-text">
-//             <h3>bug on {(row[1]).toDateString()}</h3>
-//             <p>
-//               description: {row[2]}<br></br>
-//               status: {row[3]}<br></br>
-//               rating: {row[4]}</p>
-//           </div>
-//         </div>
-//       ))}
-//     </>
-//   )
-// }
-
-// async function GetData() {
-//   const myData = await listBugs();
-//   const rows = myData
-//   return (
-//     <>
-//       {rows.map((row) => (
-//         <div key={row[0]} className="bug-card">
-//           <div className="bug-for-card">
-//             <pre> {cardBug} </pre>
-//           </div>
-//           <div className="card-text">
-//             <h3>bug on {(row[1]).toDateString()}</h3>
-//             <p>
-//               description: {row[2]}<br></br>
-//               status: {row[3]}<br></br>
-//               rating: {row[4]}</p>
-//           </div>
-//         </div>
-//       ))}
-//     </>
-//   )
-// }
